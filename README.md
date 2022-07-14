@@ -1,19 +1,27 @@
 ## Using Firebase BOM Library in your Android application
 
-###Add this in your build.gradle
+### Add it in your root build.gradle at the end of repositories:
 ```groovy
-implementation ''
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
-###Do not forget to add internet permission in manifest if already not present
+### Add this in your build.gradle
+```groovy
+implementation 'com.github.ahmadidrees347:Firebase-BOM-Lib:version'
+```
+Do not forget to add internet permission in manifest if already not present
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
-###For FCM Notifications, initialize it in onCreate() Method of Application class :
+### For FCM Notifications, initialize it in onCreate() Method of Application class :
 ```kotlin
 FirebaseFCM.initializeFCM(context, "/topics/$packageName")
 ```
 
-###For FireBase Analytics, create an object FirebaseAnalytics, passing context init :
+### For FireBase Analytics, create an object FirebaseAnalytics, passing context init :
 ```kotlin
  private val fbAnalytics by lazy { FirebaseAnalytics(this) }
  ```
@@ -23,7 +31,7 @@ Send eventName & eventStatus init:
 fbAnalytics.sendEventAnalytics(eventName, eventStatus)
 ```
 
-###For FireBase Remote Config, create an object RemoteConfigDate, passing topicName init :
+### For FireBase Remote Config, create an object RemoteConfigDate, passing topicName init :
 ```kotlin
 private val remoteConfig = RemoteConfigDate("topicName")
 ```
