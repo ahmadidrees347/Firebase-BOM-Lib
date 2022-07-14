@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ad_">AD</string>
+    <string name="feature_image">feature</string>
+
+    <!--Notifications-->
+    <string name="default_notification_channel_id" translatable="false">Message</string>
+    <string name="default_notification_channel_name" translatable="false">Message</string>
+
+</resources>
