@@ -22,7 +22,7 @@ class RemoteConfigDate(private val remoteTopic: String) {
             .setMinimumFetchIntervalInSeconds(timeInMillis)
             .build()
         remoteConfig?.setConfigSettingsAsync(configSetting)
-        remoteConfig?.fetch(timeInMillis)
+//        remoteConfig?.fetch(timeInMillis)
         remoteConfig?.setDefaultsAsync(
             mapOf(remoteTopic to Gson().toJson(Any()))
         )
