@@ -18,7 +18,8 @@ Do not forget to add internet permission in manifest if already not present
 ```
 ### For FCM Notifications, initialize it in onCreate() Method of Application class :
 ```kotlin
-FirebaseFCM.initializeFCM(context, "/topics/$packageName")
+val fcm = FirebaseFCM(this)
+fcm.initializeFCM("/topics/$packageName")
 ```
 
 ### For FireBase Analytics, create an object FirebaseAnalytics, passing context init :

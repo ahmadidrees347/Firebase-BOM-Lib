@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
 
 
         //Subscribe FCM Notifications
-        FirebaseFCM.initializeFCM(this, "/topics/$packageName")
+        val fcm = FirebaseFCM(this)
+        fcm.initializeFCM("/topics/$packageName")
 
         //Send FireBase Analytic Event
         sendFbEvent("MainActivity", "Index Screen Open")
