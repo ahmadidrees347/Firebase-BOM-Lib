@@ -16,6 +16,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
+import androidx.annotation.Keep
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -24,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 internal const val TAG = "FCMService"
 
+@Keep
 class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

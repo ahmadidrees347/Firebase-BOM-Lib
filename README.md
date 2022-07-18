@@ -10,7 +10,7 @@ allprojects {
 ```
 ### Add this in your build.gradle
 ```groovy
-implementation 'com.github.ahmadidrees347:Firebase-BOM-Lib:version'
+implementation 'com.github.ahmadidrees347:Firebase-BOM-Lib:firebase-bom-version'
 ```
 Do not forget to add internet permission in manifest if already not present
 ```xml

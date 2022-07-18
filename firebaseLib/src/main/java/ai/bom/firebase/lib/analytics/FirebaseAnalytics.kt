@@ -2,8 +2,10 @@ package ai.bom.firebase.lib.analytics
 
 import android.content.Context
 import android.os.Bundle
+import androidx.annotation.Keep
 import com.google.firebase.analytics.FirebaseAnalytics
 
+@Keep
 class FirebaseAnalytics(context: Context) {
     private val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
 

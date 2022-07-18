@@ -6,9 +6,11 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import androidx.annotation.Keep
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 
+@Keep
 class FirebaseFCM {
     companion object {
         fun initializeFCM(context: Context, topic: String) {

@@ -7,6 +7,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class RemoteConfigDate(private val remoteTopic: String) {
 
     private var remoteConfig: FirebaseRemoteConfig? = null
