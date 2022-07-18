@@ -11,23 +11,7 @@ import com.google.gson.annotations.SerializedName
 class RemoteConfigDate(private val remoteTopic: String) {
 
     private var remoteConfig: FirebaseRemoteConfig? = null
-    private val timeInMillis: Long = if (BuildConfig.DEBUG) 0L else 3600L
-
-    companion object {
-        @JvmStatic
-        var remoteAdSettings: Any? = null
-
-
-        fun RemoteDetailModel.isRemoteAdOn() = (value == "on")
-    }
-
-    fun setRemoteSetting(remoteAdSetting: Any) {
-        remoteAdSettings = remoteAdSetting
-    }
-
-    fun getRemoteSetting() = remoteAdSettings
-
-    inline fun <reified T> getRemoteData() = (remoteAdSettings as? T?)
+    private val timeInMillis: Long = if (BuildConfig.DEBUG) 1L else 3600L
 
     private fun getInstance(): FirebaseRemoteConfig? {
         remoteConfig?.let {
@@ -44,7 +28,6 @@ class RemoteConfigDate(private val remoteTopic: String) {
         return remoteConfig
     }
 
-
     private fun getRemoteConfig(): Any {
         return Gson().fromJson(
             getInstance()?.getString(remoteTopic),
@@ -57,7 +40,6 @@ class RemoteConfigDate(private val remoteTopic: String) {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val value = getRemoteConfig()
-                    remoteAdSettings = value
                     listener.invoke(value)
                 } else {
                     listener.invoke(null)

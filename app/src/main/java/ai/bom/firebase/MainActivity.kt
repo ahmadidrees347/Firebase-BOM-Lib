@@ -2,7 +2,6 @@ package ai.bom.firebase
 
 import ai.bom.firebase.lib.analytics.FirebaseAnalytics
 import ai.bom.firebase.lib.config.RemoteConfigDate
-import ai.bom.firebase.lib.config.RemoteConfigDate.Companion.isRemoteAdOn
 import ai.bom.firebase.lib.fcm.FirebaseFCM
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +12,8 @@ class MainActivity : AppCompatActivity() {
 
     private val fbAnalytics by lazy { FirebaseAnalytics(this) }
     private val remoteConfig = RemoteConfigDate("topicName")
+
+    private var remoteAdSettings = RemoteModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +30,13 @@ class MainActivity : AppCompatActivity() {
         remoteConfig.getRemoteConfig {
             it?.let {
                 val remoteJson = Gson().toJson(it)
-                val remoteData = Gson().fromJson(remoteJson, RemoteModel::class.java)
-                remoteConfig.setRemoteSetting(remoteData)
-                Log.e("RemoteConfigNew*", "${remoteConfig.getRemoteData<RemoteModel>()}")
+                remoteAdSettings = Gson().fromJson(remoteJson, RemoteModel::class.java)
+                Log.e("RemoteConfigNew*", "$remoteAdSettings")
 
-                if (remoteData.splashNative.isRemoteAdOn()) {
+                if (remoteAdSettings.splashNative.value == "on") {
                     //Load Splash Native AD
                 }
-                if (remoteData.splashInter.isRemoteAdOn()) {
+                if (remoteAdSettings.splashInter.value == "on") {
                     //Load Splash Interstitial AD
                 }
                 sendFbEvent("RemoteConfig", "Config Fetch")

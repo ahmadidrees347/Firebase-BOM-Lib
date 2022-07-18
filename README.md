@@ -35,18 +35,21 @@ fbAnalytics.sendEventAnalytics(eventName, eventStatus)
 ### For FireBase Remote Config, create an object RemoteConfigDate, passing topicName init :
 ```kotlin
 private val remoteConfig = RemoteConfigDate("topicName")
+private var remoteAdSettings = RemoteModel()
 ```
 Make your Custom model the way you want to receive model, call getRemoteConfig() to get data:
 ```kotlin
- remoteConfig.getRemoteConfig {
+remoteConfig.getRemoteConfig {
     it?.let {
         val remoteJson = Gson().toJson(it)
-        val remoteData = Gson().fromJson(remoteJson, RemoteModel::class.java)
-        remoteConfig.setRemoteSetting(remoteData)
-        Log.e("RemoteConfigNew*", "${remoteConfig.getRemoteData<RemoteModel>()}")
+        remoteAdSettings = Gson().fromJson(remoteJson, RemoteModel::class.java)
+        Log.e("RemoteConfigNew*", "$remoteAdSettings")
 
-        if (remoteData.splashNative.isRemoteAdOn()) {
-            Log.e("RemoteConfigNew*", "${remoteData.splashNative.isRemoteAdOn()}")
+        if (remoteAdSettings.splashNative.value == "on") {
+            //Load Splash Native AD
+        }
+        if (remoteAdSettings.splashInter.value == "on") {
+            //Load Splash Interstitial AD
         }
     }
 }

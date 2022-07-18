@@ -14,6 +14,8 @@ data class RemoteModel(
     val indexInter: RemoteDetailModel = RemoteDetailModel()
 ) {
     override fun toString(): String {
-        return "splashNative : $splashNative, splashInter : $splashInter, indexInter : $indexInter"
+        return "splashNative : $splashNative," +
+                " splashInter : $splashInter," +
+                " indexInter : $indexInter"
     }
 }
