@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             it?.let {
                 val remoteJson = Gson().toJson(it)
                 val remoteData = Gson().fromJson(remoteJson, RemoteModel::class.java)
-                RemoteConfigDate.remoteAdSettings = remoteData
+                remoteConfig.setRemoteSetting(remoteData)
                 Log.e("RemoteConfigNew*", "${remoteConfig.getRemoteData<RemoteModel>()}")
 
                 if (remoteData.splashNative.isRemoteAdOn()) {

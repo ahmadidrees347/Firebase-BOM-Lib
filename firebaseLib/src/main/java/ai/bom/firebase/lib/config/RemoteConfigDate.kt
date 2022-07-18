@@ -17,8 +17,15 @@ class RemoteConfigDate(private val remoteTopic: String) {
         @JvmStatic
         var remoteAdSettings: Any? = null
 
+
         fun RemoteDetailModel.isRemoteAdOn() = (value == "on")
     }
+
+    fun setRemoteSetting(remoteAdSetting: Any) {
+        remoteAdSettings = remoteAdSetting
+    }
+
+    fun getRemoteSetting() = remoteAdSettings
 
     inline fun <reified T> getRemoteData() = (remoteAdSettings as? T?)
 
