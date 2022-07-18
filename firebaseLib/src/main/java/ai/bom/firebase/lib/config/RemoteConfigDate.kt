@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 class RemoteConfigDate(private val remoteTopic: String) {
 
     private var remoteConfig: FirebaseRemoteConfig? = null
-    private val timeInMillis: Long = if (BuildConfig.DEBUG) 1L else 3600L
+    private val timeInMillis: Long = if (BuildConfig.DEBUG) 0L else 3600L
 
     private fun getInstance(): FirebaseRemoteConfig? {
         remoteConfig?.let {
@@ -22,6 +22,7 @@ class RemoteConfigDate(private val remoteTopic: String) {
             .setMinimumFetchIntervalInSeconds(timeInMillis)
             .build()
         remoteConfig?.setConfigSettingsAsync(configSetting)
+        remoteConfig?.fetch(timeInMillis)
         remoteConfig?.setDefaultsAsync(
             mapOf(remoteTopic to Gson().toJson(Any()))
         )
@@ -36,6 +37,7 @@ class RemoteConfigDate(private val remoteTopic: String) {
     }
 
     fun getRemoteConfig(listener: ((Any?) -> Unit)) {
+        getInstance()?.reset()
         getInstance()?.fetchAndActivate()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
