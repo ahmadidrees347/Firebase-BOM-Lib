@@ -7,38 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:744390342276:android:ac69594aa48e365aee34d1",
-        "android_client_info": {
-          "package_name": "ai.bom.firebase"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "744390342276-juc53gc7jmnb4tvnturfoh9mveh0oacl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCIpEz4fDK_LI2FCj6eJvTY2jQme1dzzws"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "744390342276-juc53gc7jmnb4tvnturfoh9mveh0oacl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:744390342276:android:d471528021ee286dee34d1",
         "android_client_info": {
-          "package_name": "com.all.video.downloader.fast.downloading.video.saver.browser"
+          "package_name": "ai.bom.firebase"
         }
       },
       "oauth_client": [

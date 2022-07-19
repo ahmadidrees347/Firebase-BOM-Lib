@@ -14,9 +14,6 @@ class RemoteConfigDate(private val remoteTopic: String) {
     private val timeInMillis: Long = if (BuildConfig.DEBUG) 0L else 3600L
 
     private fun getInstance(): FirebaseRemoteConfig? {
-        remoteConfig?.let {
-            return it
-        }
         remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSetting = FirebaseRemoteConfigSettings.Builder()
             .setMinimumFetchIntervalInSeconds(timeInMillis)

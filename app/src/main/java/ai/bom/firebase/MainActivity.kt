@@ -11,7 +11,7 @@ import com.google.gson.Gson
 class MainActivity : AppCompatActivity() {
 
     private val fbAnalytics by lazy { FirebaseAnalytics(this) }
-    private val remoteConfig = RemoteConfigDate("topicName")
+    private val remoteConfig = RemoteConfigDate("demo")
 
     private var remoteAdSettings = RemoteModel()
 

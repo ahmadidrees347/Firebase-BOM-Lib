@@ -48,9 +48,6 @@ remoteConfig.getRemoteConfig {
         if (remoteAdSettings.splashNative.value == "on") {
             //Load Splash Native AD
         }
-        if (remoteAdSettings.splashInter.value == "on") {
-            //Load Splash Interstitial AD
-        }
     }
 }
 ```
