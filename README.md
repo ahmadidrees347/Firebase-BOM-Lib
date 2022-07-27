@@ -24,7 +24,7 @@ fcm.initializeFCM("/topics/$packageName")
 
 ### For FireBase Analytics, create an object FirebaseAnalytics, passing context init :
 ```kotlin
- private val fbAnalytics by lazy { FirebaseAnalytics(this) }
+ val fbAnalytics = FirebaseAnalytics(this)
  ```
 Send eventName & eventStatus init:
 
