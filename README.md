@@ -42,7 +42,9 @@ Make your Custom model the way you want to receive model, call getRemoteConfig()
 remoteConfig.getRemoteConfig {
     it?.let {
         val remoteJson = Gson().toJson(it)
-        remoteAdSettings = Gson().fromJson(remoteJson, RemoteModel::class.java)
+        if (!remoteJson.isNullOrEmpty())
+            remoteAdSettings = Gson().fromJson(remoteJson, RemoteModel::class.java)
+
         Log.e("RemoteConfigNew*", "$remoteAdSettings")
 
         if (remoteAdSettings.splashNative.value == "on") {
