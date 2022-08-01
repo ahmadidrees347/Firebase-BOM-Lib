@@ -26,7 +26,7 @@ class RemoteConfigDate(private val remoteTopic: String) {
         return remoteConfig
     }
 
-    private fun getRemoteConfig(): Any {
+    private fun getRemoteConfig(): Any? {
         return Gson().fromJson(
             getInstance()?.getString(remoteTopic),
             Any::class.java

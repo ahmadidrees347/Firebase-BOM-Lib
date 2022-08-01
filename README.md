@@ -35,7 +35,7 @@ fbAnalytics.sendEventAnalytics(eventName, eventStatus)
 ### For FireBase Remote Config, create an object RemoteConfigDate, passing topicName init :
 ```kotlin
 private val remoteConfig = RemoteConfigDate("topicName")
-private var remoteAdSettings = RemoteModel()
+var remoteAdSettings = RemoteModel()
 ```
 Make your Custom model the way you want to receive model, call getRemoteConfig() to get data:
 ```kotlin
