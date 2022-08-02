@@ -16,6 +16,7 @@ Do not forget to add internet permission in manifest if already not present
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+Create Firebase project, add you application ID init, download your google-services.json file and place it in app folder.
 ### For FCM Notifications, initialize it in onCreate() Method of Application class :
 ```kotlin
 val fcm = FirebaseFCM(this)

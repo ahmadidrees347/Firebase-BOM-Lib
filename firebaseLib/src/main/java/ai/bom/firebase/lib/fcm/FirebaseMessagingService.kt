@@ -31,7 +31,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.i(TAG, "onMessageReceived: ")
 
-
         //Data available
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
@@ -45,12 +44,12 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             val packageName = remoteMessage.data["app_url"]?.split("=")?.get(1)
 
             //Check already installed app
-            if (packageName != null) {
-                val alreadyInstalled = isAppInstalled(packageName, this)
-                if (alreadyInstalled) return
+            if (!packageName.isNullOrEmpty()) {
+//                val alreadyInstalled = isAppInstalled(packageName)
+//                if (alreadyInstalled) return
 
                 //send notification
-                if (icon == null || title == null || shortDesc == null) {
+                if (icon.isNullOrEmpty() || title.isNullOrEmpty() || shortDesc.isNullOrEmpty()) {
                     return
                 } else {
                     Handler(this.mainLooper).post {
@@ -70,9 +69,12 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         longDesc: String?,
         storePackage: String
     ) {
+        val alreadyInstalled = isAppInstalled(storePackage)
+        Log.i(TAG, "alreadyInstalled: $alreadyInstalled, $longDesc")
 
-        //Open PlayStore
-        val intent = try {
+        val intent = if (alreadyInstalled) {
+            packageManager.getLaunchIntentForPackage(storePackage)
+        } else try {
             Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$storePackage"))
         } catch (e: ActivityNotFoundException) {
             Intent(
@@ -80,16 +82,14 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 Uri.parse("https://play.google.com/store/apps/details?id=$storePackage")
             )
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         } else {
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
-        Log.i(TAG, "longDesc: $longDesc")
-
-        //Make Remote Views For text
+        //Remote Views
         val remoteViews = RemoteViews(packageName, R.layout.notification_view)
         remoteViews.setTextViewText(R.id.tv_title, title)
         remoteViews.setTextViewText(R.id.tv_short_desc, shortDesc)
@@ -126,27 +126,23 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         //Set Images into remoteViews
         Picasso.get().load(icon)
             .into(remoteViews, R.id.iv_icon, notificationID, notificationBuilder.build())
-        if (image != null) {
+        if (!image.isNullOrEmpty()) {
             remoteViews.setViewVisibility(R.id.iv_feature, View.VISIBLE)
             Picasso.get().load(image)
                 .into(remoteViews, R.id.iv_feature, notificationID, notificationBuilder.build())
         }
     }
 
-    private fun isAppInstalled(uri: String, context: Context): Boolean {
-        val pm = context.packageManager
+    private fun isAppInstalled(packageName: String): Boolean {
         return try {
-            val applicationInfo = pm.getApplicationInfo(uri, 0)
+            val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
             applicationInfo.enabled
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
     }
-    private val seed = AtomicInteger()
 
-    private fun getNextInt(): Int {
-        return seed.incrementAndGet()
-    }
+    private fun getNextInt() = AtomicInteger().incrementAndGet()
 
     override fun onNewToken(p0: String) {
 
