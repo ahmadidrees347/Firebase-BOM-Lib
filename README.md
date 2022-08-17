@@ -40,7 +40,7 @@ var remoteAdSettings = RemoteModel()
 ```
 Make your Custom model the way you want to receive model, call getRemoteConfig() to get data:
 ```kotlin
-remoteConfig.getRemoteConfig {
+remoteConfig.getRemoteConfig(context) {
     it?.let {
         val remoteJson = Gson().toJson(it)
         if (!remoteJson.isNullOrEmpty())

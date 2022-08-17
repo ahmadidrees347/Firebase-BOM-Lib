@@ -1,6 +1,7 @@
 package ai.bom.firebase.lib.config
 
 import ai.bom.firebase.lib.BuildConfig
+import android.content.Context
 import androidx.annotation.Keep
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -26,19 +27,24 @@ class RemoteConfigDate(private val remoteTopic: String) {
         return remoteConfig
     }
 
-    private fun getRemoteConfig(): Any? {
-        return Gson().fromJson(
-            getInstance()?.getString(remoteTopic),
-            Any::class.java
-        )
+    private fun getRemoteConfig(context: Context): Any? {
+        val pref = SharedPref(context)
+        var json = getInstance()?.getString(remoteTopic)
+
+        if (json.isNullOrEmpty() || json == "{}") {
+            json = pref.getRemoteString()
+        }
+        pref.putRemoteString(json)
+
+        return Gson().fromJson(json, Any::class.java)
     }
 
-    fun getRemoteConfig(listener: ((Any?) -> Unit)) {
+    fun getRemoteConfig(context: Context, listener: ((Any?) -> Unit)) {
         getInstance()?.reset()
         getInstance()?.fetchAndActivate()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val value = getRemoteConfig()
+                    val value = getRemoteConfig(context)
                     listener.invoke(value)
                 } else {
                     listener.invoke(null)

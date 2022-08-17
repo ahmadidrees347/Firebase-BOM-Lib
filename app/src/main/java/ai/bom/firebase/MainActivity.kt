@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         //Send FireBase Analytic Event
         sendFbEvent("MainActivity", "Index Screen Open")
 
-        remoteConfig.getRemoteConfig {
+        remoteConfig.getRemoteConfig(this) {
             it?.let {
                 val remoteJson = Gson().toJson(it)
                 if (!remoteJson.isNullOrEmpty())
