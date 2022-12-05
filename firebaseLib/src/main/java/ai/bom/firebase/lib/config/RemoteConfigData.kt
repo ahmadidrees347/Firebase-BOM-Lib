@@ -42,13 +42,9 @@ class RemoteConfigDate(private val remoteTopic: String) {
     fun getRemoteConfig(context: Context, listener: ((Any?) -> Unit)) {
         getInstance()?.reset()
         getInstance()?.fetchAndActivate()
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val value = getRemoteConfig(context)
-                    listener.invoke(value)
-                } else {
-                    listener.invoke(null)
-                }
+            ?.addOnCompleteListener { _ ->
+                val value = getRemoteConfig(context)
+                listener.invoke(value)
             }
     }
 }
