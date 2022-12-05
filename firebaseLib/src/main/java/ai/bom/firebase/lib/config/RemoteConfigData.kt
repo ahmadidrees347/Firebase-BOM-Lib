@@ -2,6 +2,7 @@ package ai.bom.firebase.lib.config
 
 import ai.bom.firebase.lib.BuildConfig
 import android.content.Context
+import android.util.Log
 import androidx.annotation.Keep
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -42,9 +43,14 @@ class RemoteConfigDate(private val remoteTopic: String) {
     fun getRemoteConfig(context: Context, listener: ((Any?) -> Unit)) {
         getInstance()?.reset()
         getInstance()?.fetchAndActivate()
-            ?.addOnCompleteListener { _ ->
-                val value = getRemoteConfig(context)
-                listener.invoke(value)
+            ?.addOnCompleteListener { task ->
+                Log.e("RemoteConfigNew*", "status : ${task.isSuccessful}")
+                if (task.isSuccessful) {
+                    val value = getRemoteConfig(context)
+                    listener.invoke(value)
+                } else {
+                    listener.invoke(getRemoteConfig(context))
+                }
             }
     }
 }
