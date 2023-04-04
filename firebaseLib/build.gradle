@@ -19,13 +19,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
 
     //Firebase BOM
-    api platform('com.google.firebase:firebase-bom:30.3.1')
+    api platform('com.google.firebase:firebase-bom:31.2.3')
     api 'com.google.firebase:firebase-config-ktx'
     api 'com.google.firebase:firebase-analytics-ktx'
     api 'com.google.firebase:firebase-messaging-ktx'
     api 'com.google.firebase:firebase-crashlytics-ktx'
     //GSON
-    api 'com.google.code.gson:gson:2.9.0'
+    api 'com.google.code.gson:gson:2.9.1'
     //Picasso For RemoteViews
     api 'com.squareup.picasso:picasso:2.71828'
 }

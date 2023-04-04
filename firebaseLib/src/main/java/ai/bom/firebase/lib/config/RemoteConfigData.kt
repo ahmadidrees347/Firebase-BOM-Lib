@@ -2,6 +2,7 @@ package ai.bom.firebase.lib.config
 
 import ai.bom.firebase.lib.BuildConfig
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.Keep
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -10,10 +11,11 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 @Keep
-class RemoteConfigDate(private val remoteTopic: String) {
+class RemoteConfigData(private val remoteTopic: String) {
 
     private var remoteConfig: FirebaseRemoteConfig? = null
     private val timeInMillis: Long = if (BuildConfig.DEBUG) 0L else 3600L
+    private var lastValueReceivedTime: Long = 0
 
     private fun getInstance(): FirebaseRemoteConfig? {
         remoteConfig = FirebaseRemoteConfig.getInstance()
@@ -44,7 +46,12 @@ class RemoteConfigDate(private val remoteTopic: String) {
         getInstance()?.reset()
         getInstance()?.fetchAndActivate()
             ?.addOnCompleteListener { task ->
-                Log.e("RemoteConfigNew*", "status : ${task.isSuccessful}")
+                val status = SystemClock.elapsedRealtime() - lastValueReceivedTime < 1000
+                Log.e("RemoteConfigNew*", "status $status: ${task.isSuccessful}")
+                if (status) {
+                    return@addOnCompleteListener
+                }
+                lastValueReceivedTime = SystemClock.elapsedRealtime()
                 if (task.isSuccessful) {
                     val value = getRemoteConfig(context)
                     listener.invoke(value)

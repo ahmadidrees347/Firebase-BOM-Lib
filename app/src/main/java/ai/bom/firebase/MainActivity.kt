@@ -1,7 +1,7 @@
 package ai.bom.firebase
 
 import ai.bom.firebase.lib.analytics.FirebaseAnalytics
-import ai.bom.firebase.lib.config.RemoteConfigDate
+import ai.bom.firebase.lib.config.RemoteConfigData
 import ai.bom.firebase.lib.fcm.FirebaseFCM
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,7 @@ import com.google.gson.Gson
 class MainActivity : AppCompatActivity() {
 
     private val fbAnalytics by lazy { FirebaseAnalytics(this) }
-    private val remoteConfig = RemoteConfigDate("demo")
+    private val remoteConfig = RemoteConfigData("demo")
 
     private var remoteAdSettings = RemoteModel()
 
